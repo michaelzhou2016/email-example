@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&verifyServerCertificate=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: tryxycdz30&#
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  mail:
+    host: smtp.qq.com
+    username: strength_zhou@qq.com
+    password: zz
+    toadmin: 2547847965@qq.com;strength_zhou@126.com
+#    host: smtp.exmail.qq.com
+#    port: 465
+#    username: zhouliliang@guiji.ai #发送者邮件
+#    password: Charlie@1990   #密码，不能是管理员添加的初始密码，不然会报501错误（需要改过密码）
+#    toadmin: strength_zhou@qq.com;strength_zhou@126.com #用;分开
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          ssl:
+#            enabled: true
+#          socketFactory:
+#            port: 465
+#            class: javax.net.ssl.SSLSocketFactory
+#          starttls:
+#            enable: true
+#            required: true
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: ai.guiji.easyexcel.examples.entity
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+
