@@ -18,27 +18,27 @@ INSERT INTO test.billing_mail_config (mail_type, mail_subject, mail_receivers, m
     <title>BSS客户【在线充值】成功通知</title>
 </head>
 <body>
-<p>客户：<span th:text="${customer}"></span></p>
-<p>操作人：<span th:text="${operator}"></span></p>
-<p>支付方式：在线充值-微信</p>
-<p>充值金额：<span th:text="${amount}"></span>元</p>
-<p>操作时间：<span th:text="${date}"></span></p>
+    <p>客户：<span th:text="${customer}"></span></p>
+    <p>操作人：<span th:text="${operator}"></span></p>
+    <p>支付方式：在线充值-<span th:text="${payType}"></span></p>
+    <p>充值金额：<span th:text="${amount}"></span>元</p>
+    <p>操作时间：<span th:text="${date}"></span></p>
 </body>
 </html>', 1, '2019-12-17 09:42:56', '');
-INSERT INTO test.billing_mail_config (mail_type, mail_subject, mail_receivers, mail_content, create_user, create_time, remark) VALUES (1, 'BSS客户【线下汇款】申请', '2547847965@qq.com;strength_zhou@126.com;', '<!DOCTYPE html>
+INSERT INTO test.billing_mail_config (mail_type, mail_subject, mail_receivers, mail_content, create_user, create_time, remark) VALUES (1, 'BSS客户【线下汇款】申请', 'zhouliliang@guiji.ai;strength_zhou@126.com;', '<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>BSS客户【线下汇款】申请</title>
 </head>
 <body>
-<p>客户：<span th:text="${customer}"></span></p>
-<p>操作人：<span th:text="${operator}"></span></p>
-<p>支付方式：线下汇款-银行转账</p>
-<p>打款金额：<span th:text="${amount}"></span>元</p>
-<p>付款账户名称：<span th:text="${account_name}"></span></p>
-<p>付款账号：<span th:text="${account_number}"></span></p>
-<p>支付截图：<img src="cid:snap_url"/></p>
-<p>操作时间：<span th:text="${date}"></span></p>
+    <p>客户：<span th:text="${customer}"></span></p>
+    <p>操作人：<span th:text="${operator}"></span></p>
+    <p>支付方式：线下汇款-<span th:text="${payType}"></span></p>
+    <p>打款金额：<span th:text="${amount}"></span>元</p>
+    <p>付款账户名称：<span th:text="${account_name}"></span></p>
+    <p>付款账号：<span th:text="${account_number}"></span></p>
+    <p>支付截图：<img src="cid:snap_url"/></p>
+    <p>操作时间：<span th:text="${date}"></span></p>
 </body>
 </html>', 1, '2019-12-17 11:19:22', null);

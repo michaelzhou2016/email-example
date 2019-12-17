@@ -5,13 +5,13 @@
     <title>BSS客户【线下汇款】申请</title>
 </head>
 <body>
-<p>客户：<span th:text="${customer}"></span></p>
-<p>操作人：<span th:text="${operator}"></span></p>
-<p>支付方式：线下汇款-银行转账</p>
-<p>打款金额：<span th:text="${amount}"></span>元</p>
-<p>付款账户名称：<span th:text="${account_name}"></span></p>
-<p>付款账号：<span th:text="${account_number}"></span></p>
-<p>支付截图：<img src="cid:snap_url"/></p>
-<p>操作时间：<span th:text="${date}"></span></p>
+    <p>客户：<span th:text="${customer}"></span></p>
+    <p>操作人：<span th:text="${operator}"></span></p>
+    <p>支付方式：线下汇款-<span th:text="${payType}"></span></p>
+    <p>打款金额：<span th:text="${amount}"></span>元</p>
+    <p>付款账户名称：<span th:text="${account_name}"></span></p>
+    <p>付款账号：<span th:text="${account_number}"></span></p>
+    <p>支付截图：<img src="cid:snap_url"/></p>
+    <p>操作时间：<span th:text="${date}"></span></p>
 </body>
 </html>

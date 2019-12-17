@@ -125,6 +125,7 @@ public class MailServiceImpl implements MailService {
         Context context = new Context();
         context.setVariable("customer", "zhouliliang");
         context.setVariable("operator", "zhouliliang");
+        context.setVariable("payType", "微信");
         context.setVariable("amount", "100");
         context.setVariable("date", DATETIME_FORMATTER.format(LocalDateTime.now()));
 
@@ -150,6 +151,7 @@ public class MailServiceImpl implements MailService {
         Context context = new Context();
         context.setVariable("customer", "zhouliliang");
         context.setVariable("operator", "zhouliliang");
+        context.setVariable("payType", "银行转账");
         context.setVariable("amount", "100");
         context.setVariable("account_name", "zll");
         context.setVariable("account_number", "100100");
