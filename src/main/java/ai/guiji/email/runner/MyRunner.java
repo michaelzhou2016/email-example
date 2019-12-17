@@ -25,6 +25,7 @@ public class MyRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
 //        mailService.sendMailByRemind("18936918059");
 //        mailService.sendPictureTemplateMail();
-        log.info("type:{}", EmailTypeEnum.OFFLINE_PAY_APPLY.getType());
+//        log.info("type:{}", EmailTypeEnum.OFFLINE_PAY_APPLY.getType());
+        mailService.sendTemplateMail();
     }
 }

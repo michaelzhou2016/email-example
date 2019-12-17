@@ -9,7 +9,7 @@ spring:
   mail:
     host: smtp.qq.com
     username: strength_zhou@qq.com
-    password: zz
+    password: xxx
     toadmin: 2547847965@qq.com;strength_zhou@126.com
 #    host: smtp.exmail.qq.com
 #    port: 465
@@ -30,7 +30,7 @@ spring:
 #            required: true
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
-  type-aliases-package: ai.guiji.easyexcel.examples.entity
+  type-aliases-package: ai.guiji.email.entity
 pagehelper:
   helper-dialect: mysql
   reasonable: true
