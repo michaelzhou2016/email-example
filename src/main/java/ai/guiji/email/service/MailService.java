@@ -20,4 +20,8 @@ public interface MailService {
     void sendTemplateMail();
 
     void sendPictureTemplateMail();
+
+    void testTemplateResolver();
+
+    void sendTemplateMailV2();
 }

@@ -1,9 +1,11 @@
 package ai.guiji.email.service.impl;
 
 import ai.guiji.email.constant.EmailTypeEnum;
+import ai.guiji.email.dto.OnlinePaySuccessDto;
 import ai.guiji.email.entity.BillingMailConfig;
 import ai.guiji.email.mapper.BillingMailConfigMapper;
 import ai.guiji.email.service.MailService;
+import ai.guiji.email.utils.PlaceholderResolver;
 import com.google.common.base.Splitter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -26,9 +28,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * author: zhouliliang
@@ -131,10 +131,10 @@ public class MailServiceImpl implements MailService {
 
         BillingMailConfig config = billingMailConfigMapper.selectByPrimaryKey(EmailTypeEnum.ONLINE_PAY_SUCCESS.getType());
         if (Objects.nonNull(config) && StringUtils.isNotBlank(config.getMailReceivers()) && StringUtils.isNotBlank(config.getMailContent())) {
-            log.info("template:{}", config.getMailContent());
+//            log.info("template:{}", config.getMailContent());
 
             String emailContent = springTemplateEngine.process(config.getMailContent(), context);
-
+            log.info(emailContent);
             try {
                 this.sendHtmlMail(from, to, "BSS客户【在线充值】成功通知", emailContent);
             } catch (MessagingException e) {
@@ -157,28 +157,11 @@ public class MailServiceImpl implements MailService {
         context.setVariable("account_number", "100100");
         context.setVariable("date", DATETIME_FORMATTER.format(LocalDateTime.now()));
 
-//        String emailContent = templateEngine.process("pictureEmailTemplate", context);
-//        String template = "<!DOCTYPE html>\n" +
-//                "<html lang=\"en\" xmlns:th=\"http://www.thymeleaf.org\">\n" +
-//                "<head>\n" +
-//                "    <meta charset=\"UTF-8\"/>\n" +
-//                "    <title>BSS客户【线下汇款】申请</title>\n" +
-//                "</head>\n" +
-//                "<body>\n" +
-//                "<p>客户：<span th:text=\"${customer}\"></span></p>\n" +
-//                "<p>操作人：<span th:text=\"${operator}\"></span></p>\n" +
-//                "<p>支付方式：线下汇款-银行转账</p>\n" +
-//                "<p>打款金额：<span th:text=\"${amount}\"></span>元</p>\n" +
-//                "<p>付款账户名称：<span th:text=\"${account_name}\"></span></p>\n" +
-//                "<p>付款账号：<span th:text=\"${account_number}\"></span></p>\n" +
-//                "<p>支付截图：<img src=\"cid:snap_url\"/></p>\n" +
-//                "<p>操作时间：<span th:text=\"${date}\"></span></p>\n" +
-//                "</body>\n" +
-//                "</html>";
         BillingMailConfig config = billingMailConfigMapper.selectByPrimaryKey(EmailTypeEnum.OFFLINE_PAY_APPLY.getType());
         if (Objects.nonNull(config) && StringUtils.isNotBlank(config.getMailReceivers()) && StringUtils.isNotBlank(config.getMailContent())) {
-            log.info("template:{}, receivers:{}", config.getMailContent(), config.getMailReceivers());
+//            log.info("template:{}, receivers:{}", config.getMailContent(), config.getMailReceivers());
             String emailContent = springTemplateEngine.process(config.getMailContent(), context);
+            log.info(emailContent);
             String[] to = SPLITTER.splitToList(config.getMailReceivers()).toArray(new String[0]); //目标必须字符串或数组，多接收人时必须为数组，用字府串会报异常
             try {
                 this.sendHtmlWithImageMail(from, to, "BSS客户【线下汇款】申请", emailContent, "snap_url", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576508932107&di=6f8dd77ea79ce49f23090f011ebe49c5&imgtype=0&src=http%3A%2F%2Ffile02.16sucai.com%2Fd%2Ffile%2F2014%2F0704%2Fe53c868ee9e8e7b28c424b56afe2066d.jpg");
@@ -187,6 +170,53 @@ public class MailServiceImpl implements MailService {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public void testTemplateResolver() {
+        BillingMailConfig config = billingMailConfigMapper.selectByPrimaryKey(EmailTypeEnum.ONLINE_PAY_SUCCESS.getType());
+        if (Objects.nonNull(config) && StringUtils.isNotBlank(config.getMailContent())) {
+
+            OnlinePaySuccessDto onlinePaySuccessDto = new OnlinePaySuccessDto();
+            onlinePaySuccessDto.setCustomer("zhouliliang");
+            onlinePaySuccessDto.setOperator("zll");
+            onlinePaySuccessDto.setPayType("在线充值-微信");
+            onlinePaySuccessDto.setAmount("100");
+            onlinePaySuccessDto.setDate(DATETIME_FORMATTER.format(LocalDateTime.now()));
+            String s = PlaceholderResolver.getDefaultResolver().resolveByObject(config.getMailContent(), onlinePaySuccessDto);
+            log.info("template:{}", s);
+        }
+    }
+
+    @Override
+    public void sendTemplateMailV2() {
+        BillingMailConfig config = billingMailConfigMapper.selectByPrimaryKey(EmailTypeEnum.ONLINE_PAY_SUCCESS.getType());
+        if (Objects.nonNull(config) && StringUtils.isNotBlank(config.getMailReceivers()) && StringUtils.isNotBlank(config.getMailContent())) {
+            log.info("template:{}", config.getMailContent());
+            String[] to = SPLITTER.splitToList(config.getMailReceivers()).toArray(new String[0]);
+//            OnlinePaySuccessDto onlinePaySuccessDto = new OnlinePaySuccessDto();
+//            onlinePaySuccessDto.setCustomer("zhouliliang");
+//            onlinePaySuccessDto.setOperator("charlie");
+//            onlinePaySuccessDto.setPayType("在线充值-微信");
+//            onlinePaySuccessDto.setAmount("10");
+//            onlinePaySuccessDto.setDate(DATETIME_FORMATTER.format(LocalDateTime.now()));
+            Map<String, Object> map = new HashMap<>();
+            map.put("customer", "zhouliliang");
+            map.put("operator", "charlie");
+            map.put("payType", "在线充值-微信");
+            map.put("amount", "100");
+            map.put("date", DATETIME_FORMATTER.format(LocalDateTime.now()));
+//            String emailContent = PlaceholderResolver.getDefaultResolver().resolveByObject(config.getMailContent(), onlinePaySuccessDto);
+            String emailContent = PlaceholderResolver.getDefaultResolver().resolveByMap(config.getMailContent(), map);
+            log.info(emailContent);
+//            try {
+//                this.sendHtmlMail(from, to, config.getMailSubject(), emailContent);
+//            } catch (MessagingException e) {
+//                e.printStackTrace();
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 }
